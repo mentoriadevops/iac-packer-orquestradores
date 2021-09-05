@@ -57,9 +57,9 @@ packer-build: ## Executar comando 'packer build'
 		-v $(PWD):/workspace \
 		-w /workspace \
 		--env-file $(PWD)/.env \
+		--entrypoint=/bin/bash \
 		-it \
-		$(DOCKER_IMAGE) \
-		build packer/
+		$(DOCKER_IMAGE) -c "packer build packer/"
 
 auth-create-sa: ## 1: create sa
 	gcloud iam service-accounts create ${GCP_PACKER_SA} \

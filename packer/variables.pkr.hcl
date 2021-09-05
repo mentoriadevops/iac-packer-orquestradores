@@ -9,6 +9,6 @@ variable "config_gcp" {
     id_projeto     = env("GCP_PROJECT")
     zona           = "us-central1-a"
     familia_imagem = "ubuntu-2004-lts"
-    usuario_ssh    = "k8s"
+    usuario_ssh    = "mentoria_iac"
   }
 }

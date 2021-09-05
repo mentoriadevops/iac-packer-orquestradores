@@ -1,0 +1,3 @@
+---
+- src: https://github.com/mentoriaiac/iac-role-node-rke.git
+  scm: git
