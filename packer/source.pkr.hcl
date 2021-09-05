@@ -1,9 +1,6 @@
-source "googlecompute" "basic-example" {
-  project_id = "dadosabertosfeira" ## TODO: change-me
-  source_image = "ubuntu-2004-focal-v20210610"
-  ## ubuntu?
-  #ssh_username = "ubuntu"
-  ssh_username = "packer" ## vai funcionar?
-
-  zone = "us-central1-a"
+source "googlecompute" "imagem-base-orquestradores" {
+  project_id          = var.config_gcp.id_projeto
+  source_image_family = var.config_gcp.familia_imagem
+  ssh_username        = var.config_gcp.usuario_ssh
+  zone                = var.config_gcp.zona
 }
