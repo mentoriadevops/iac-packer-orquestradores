@@ -1,0 +1,7 @@
+---
+- src: https://github.com/mentoriaiac/iac-role-node-rke.git
+  scm: git
+  version: v0.1.0
+- src: https://github.com/mentoriaiac/iac-role-nomad.git
+  scm: git
+  version: v0.1.0

@@ -1,18 +1,27 @@
-# Packer Template
+# IAC IMAGEM DADOS ABERTOS DA FEIRA
 
-Este repositório contém a estrutura básica para criação de um Packer template além de um pipeline para validação do template e demais arquivos necessários.
-
-O Packer template será utilizado em conjunto com playbooks Ansible para que a imagem resultante seja utilizada pelo Terraform no provisionamento dos ambientes.
+Este repositório se destina a criar uma imagem para boot de instancias de VM no GCP, sendo que o conteudo desta imagem é a role-iac do projeto Dados Abertos da Feira de Santana.
 
 ## Requisitos
 
 | Nome      	| Versao 	|
 |--------------	|---------	|
 |   Packer      |  >=1.7    |
+|   [gcloud CLI](https://cloud.google.com/sdk/docs/install)  |  >=344.0.0    |
 
+### Ambiente no GCP
+
+Para rodar o packer no google cloud é necessário ter uma service account com privilégios no projeto gcp em questão. O projeto utiliza docker para rodar o packer, portanto também é necessário ter um arquivo de credencial para ser compartilhado com a imagem.
+
+#### Passos para gerar arquivo de credencial
+
+```bash
+make generate-credentials
+```
 
 ## Variáveis
 
+> PENDENTE! não estamos em uso ainda
 Todas as variáveis que são necessárias no arquivo variables.pkr.hcl para executar o template: 
 
 | Variable     	| Default 	| Required 	| Description                                                                            	|

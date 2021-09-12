@@ -1,0 +1,7 @@
+---
+- name: "Provision Image"
+  hosts: default
+  become: true
+  roles:
+    - name: iac-role-node-rke
+    - name: iac-role-nomad

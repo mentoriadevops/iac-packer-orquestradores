@@ -1,5 +1,6 @@
 # Cache objects
 packer_cache/
+.packer.d/
 
 # Crash log
 crash.log
@@ -9,3 +10,6 @@ crash.log
 
 # Remote Template Makefile
 packer.inc
+
+creds.json
+tmp/
