@@ -1,20 +1,39 @@
 ---
-name: CI
+
+name: Packer
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
+
+env:
+  GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_KEY }}
+  GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
 
 jobs:
-  Validation:
+  packer:
     runs-on: ubuntu-20.04
-    name: validation
+    name: packer
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_KEY }}
+          export_default_credentials: true
+      
+      - name: Use gcloud CLI
+        run: gcloud info
+
+#      # fix backwards incompatibilities in template
+#      - name: Fix Template
+#        uses: hashicorp/packer-github-actions@master
+#        with:
+#          command: fix
+#          target: packer/*
 
       # validate templates
       - name: Validate Template
@@ -22,4 +41,23 @@ jobs:
         with:
           command: validate
           arguments: -syntax-only
+          target: packer/*.pkr.hcl
+
+      # init plugins
+      - name: Init Plugins
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: init
+          target: packer/init.pkr.hcl
+
+      # build artifact
+      - name: Build Artifact
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: build
+          arguments: "-color=false -on-error=abort"
           target: packer/
+        env:
+          PACKER_LOG: 1
+          PKR_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+      # additional steps to process artifacts
