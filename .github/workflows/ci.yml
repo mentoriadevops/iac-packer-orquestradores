@@ -5,14 +5,47 @@ name: Packer
 on:
   push:
 
+  pull_request:
+    branches:
+      - main
+
+  release:
+    types:
+      - created
+
 env:
   GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GCP_KEY }}
   GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
 
 jobs:
-  packer:
+  packer-lint:
+
     runs-on: ubuntu-20.04
-    name: packer
+    name: packer-lint
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Format Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: fmt
+          arguments: -check
+          target: packer/
+
+      - name: Validate Template
+        uses: hashicorp/packer-github-actions@master
+        with:
+          command: validate
+          arguments: -syntax-only
+          target: packer/
+
+  build:
+    runs-on: ubuntu-20.04
+    name: packer-build
+    needs: packer-lint
+    if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
 
     steps:
       - name: Checkout Repository
@@ -24,40 +57,27 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_KEY }}
           export_default_credentials: true
-      
-      - name: Use gcloud CLI
-        run: gcloud info
 
-#      # fix backwards incompatibilities in template
-#      - name: Fix Template
-#        uses: hashicorp/packer-github-actions@master
-#        with:
-#          command: fix
-#          target: packer/*
-
-      # validate templates
-      - name: Validate Template
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: validate
-          arguments: -syntax-only
-          target: packer/*.pkr.hcl
+      - name: Install packer and ansible
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add - && \
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
+          sudo apt-get update && sudo apt-get install -y packer ansible
 
       # init plugins
       - name: Init Plugins
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: init
-          target: packer/init.pkr.hcl
+        run: packer init packer/
 
       # build artifact
       - name: Build Artifact
-        uses: hashicorp/packer-github-actions@master
-        with:
-          command: build
-          arguments: "-color=false -on-error=abort"
-          target: packer/
+        run: packer build -color=false -on-error=abort packer/
         env:
           PACKER_LOG: 1
-          PKR_VAR_GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
-      # additional steps to process artifacts
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          PACKER_LOG_PATH: /tmp/packer.log
+
+      - name: Salva logs do Packer
+        uses: actions/upload-artifact@v2
+        with:
+          name: packer-logs
+          path: /tmp/packer.log

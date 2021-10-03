@@ -12,5 +12,6 @@ crash.log
 packer.inc
 
 creds.json
+key.json
 tmp/
 mentoria-terraform-5f41b23489f9.json
