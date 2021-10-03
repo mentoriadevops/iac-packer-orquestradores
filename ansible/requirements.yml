@@ -1,4 +1,6 @@
 ---
+# Como utilizar requirements do ansible-galaxy -> https://galaxy.ansible.com/docs/using/installing.html
+
 - src: https://github.com/mentoriaiac/iac-role-node-rke.git
   scm: git
   version: v0.1.0
