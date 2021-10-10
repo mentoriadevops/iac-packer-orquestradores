@@ -12,3 +12,9 @@ variable "config_gcp" {
     usuario_ssh    = "mentoria_iac"
   }
 }
+
+variable "release" {
+  type        = string
+  description = "Tag de release da pipeline de CI"
+  default     = ""
+}

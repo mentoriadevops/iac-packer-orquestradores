@@ -12,4 +12,5 @@ crash.log
 packer.inc
 
 creds.json
+key.json
 tmp/
