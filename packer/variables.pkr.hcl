@@ -16,5 +16,5 @@ variable "config_gcp" {
 variable "release" {
   type        = string
   description = "Tag de release da pipeline de CI"
-  default     = null
+  default     = ""
 }

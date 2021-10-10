@@ -1,5 +1,5 @@
 locals {
-  image_id = var.release ? var.release : formatdate("YYYYMMDDhhmmss", timestamp())
+  image_id = var.release != "" ? var.release : formatdate("YYYYMMDDhhmmss", timestamp())
 }
 
 source "googlecompute" "imagem-base-orquestradores" {

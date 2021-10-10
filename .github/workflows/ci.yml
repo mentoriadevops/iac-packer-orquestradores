@@ -75,7 +75,7 @@ jobs:
           PACKER_LOG: 1
           GCP_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
           PACKER_LOG_PATH: /tmp/packer.log
-          PKR_VAR_RELEASE: ${{ github.event.release.tag_name }}
+          PKR_VAR_release: ${{ github.event.release.tag_name }}
 
 
       - name: Salva logs do Packer
