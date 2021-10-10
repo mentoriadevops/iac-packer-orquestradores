@@ -8,5 +8,7 @@ source "googlecompute" "imagem-base-orquestradores" {
   ssh_username        = var.config_gcp.usuario_ssh
   zone                = var.config_gcp.zona
 
-  image_name = regex_replace("orquestradores-${local.image_id}", ".", "-")
+  image_name = replace("orquestradores-${local.image_id}", ".", "-")
+
 }
+
