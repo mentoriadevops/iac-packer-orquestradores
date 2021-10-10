@@ -3,7 +3,7 @@
 
 - src: https://github.com/mentoriaiac/iac-role-node-rke.git
   scm: git
-  version: v0.1.0
+  version: v0.2.0
 - src: https://github.com/mentoriaiac/iac-role-nomad.git
   scm: git
-  version: v0.1.0
+  version: v0.3.0
