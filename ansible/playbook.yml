@@ -3,5 +3,6 @@
   hosts: default
   become: true
   roles:
-    - name: iac-role-node-rke
-    - name: iac-role-nomad
+    - name: iac_role_node_rke
+    - name: iac_role_nomad
+    - name: iac_role_consul
