@@ -1,9 +1,12 @@
 ---
 # Como utilizar requirements do ansible-galaxy -> https://galaxy.ansible.com/docs/using/installing.html
 
-- src: https://github.com/mentoriaiac/iac-role-node-rke.git
+- src: https://github.com/mentoriaiac/iac_role_node_rke.git
   scm: git
   version: v0.2.0
-- src: https://github.com/mentoriaiac/iac-role-nomad.git
+- src: https://github.com/mentoriaiac/iac_role_nomad.git
   scm: git
   version: v0.3.0
+- src: https://github.com/lgfa29/iac_role_consul.git
+  scm: git
+  version: fix-bind-addr
