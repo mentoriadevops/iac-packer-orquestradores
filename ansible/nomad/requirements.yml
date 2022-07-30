@@ -1,0 +1,9 @@
+---
+# Como utilizar requirements do ansible-galaxy -> https://galaxy.ansible.com/docs/using/installing.html
+
+- src: https://github.com/mentoriaiac/iac_role_nomad.git
+  scm: git
+  version: v0.4.1
+- src: https://github.com/mentoriaiac/iac_role_consul.git
+  scm: git
+  version: v0.1.0
