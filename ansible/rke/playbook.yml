@@ -4,5 +4,4 @@
   become: true
   roles:
     - name: iac_role_node_rke
-    - name: iac_role_nomad
     - name: iac_role_consul
