@@ -9,7 +9,6 @@ source "googlecompute" "imagem-rke" {
   zone                = var.config_gcp.zona
 
   image_name = replace("rke-${local.image_id}", ".", "-")
-
 }
 
 source "googlecompute" "imagem-nomad" {
@@ -19,5 +18,4 @@ source "googlecompute" "imagem-nomad" {
   zone                = var.config_gcp.zona
 
   image_name = replace("nomad-${local.image_id}", ".", "-")
-
 }
